@@ -106,10 +106,4 @@ public class Passwords {
 		return sb.toString();
 	}
 	
-	public static byte[] getNextSalt() {
-		byte[] salt = new byte[32];
-		RANDOM.nextBytes(salt);
-		return salt;
-	}
-	
 }
