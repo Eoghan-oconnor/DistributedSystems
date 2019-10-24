@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
-// Adpated from Distributed Systems Lab
+// Adapted from Distributed Systems Lab
 public class PasswordServer {
 	public static void main(String[] args) throws IOException, InterruptedException {
 
