@@ -29,15 +29,15 @@ public class PasswordServer {
 		logger.info(msg);
 
 	}
-	
+
 	private void stop() {
 		if (grpcServer != null) {
 			grpcServer.shutdown();
 		}
 	}
-	
-	private void blockUntilShutdown() throws InterruptedException{
-		if(grpcServer != null) {
+
+	private void blockUntilShutdown() throws InterruptedException {
+		if (grpcServer != null) {
 			grpcServer.awaitTermination();
 		}
 	}
