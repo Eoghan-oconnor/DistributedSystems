@@ -1,6 +1,7 @@
 package ie.gmit.ds;
 
 import java.sql.Time;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -15,6 +16,38 @@ public class PasswordClient {
 
 	public static void main(String[] args) {
 		PasswordClient client = new PasswordClient("localhost", 50051);
+		Scanner console = new Scanner(System.in);
+		int Id;
+		String pwd;
+		String quit = "" ;
+		
+		while(!quit.equalsIgnoreCase("Y")) {
+			System.out.println("********GRPC-CLIENT********");
+			System.out.println("\nEnter Id: ");
+			Id = console.nextInt();
+			System.out.println("Enter Password: \n");
+			pwd = console.next();
+			System.out.println("Enter test: \n");
+			client.test = console.next();
+			
+			ByteString pass =  ByteString.copyFrom(pwd.getBytes());
+			
+			try {
+				
+				client.hash(Id, pwd);
+				client.validate();
+				
+				System.out.print("Press Y to quit and N to Continue: ");
+				quit = console.next();
+				if(quit.equalsIgnoreCase("Y")) {
+					System.exit(0);
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+		}
 	}
 
 	// logger used to log message for application component
@@ -41,7 +74,7 @@ public class PasswordClient {
 		StreamObserver<BoolValue> response = new StreamObserver<BoolValue>() {
 			@Override
 			public void onNext(BoolValue boolValue) {
-				System.out.println("**" + boolValue.getValue());
+				System.out.println("Login success: " + boolValue.getValue());
 			}
 
 			@Override
@@ -96,6 +129,9 @@ public class PasswordClient {
 				
 			}
 		};
+		
+		//Debugs
+		System.out.println("****");
 		
 		try {
 			HashRequest hr = HashRequest.newBuilder().setUserID(Id).setPassword(pwd).build();
